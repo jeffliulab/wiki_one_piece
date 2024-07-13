@@ -1,0 +1,3889 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../22__List__3__LinkedList/">
+      
+      
+        <link rel="next" href="../23__Set__1_Set%28Interface%29/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.13">
+    
+    
+      
+        <title>22 List 4 LinkedList (DIY) - Jeff Liu Lab's wiki</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.7e359304.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#intlist" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Jeff Liu Lab&#39;s wiki" class="md-header__button md-logo" aria-label="Jeff Liu Lab's wiki" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Jeff Liu Lab's wiki
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              22  List  4  LinkedList (DIY)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Jeff Liu Lab&#39;s wiki" class="md-nav__button md-logo" aria-label="Jeff Liu Lab's wiki" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Jeff Liu Lab's wiki
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Welcome to MkDocs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Academy
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Academy
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Academy/AboutMe/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AboutMe
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Academy/Questions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Questions
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Academy/StudyPlan/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    StudyPlan
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Academy/StudyRoute/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Study Route de facto
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Academy/Terms_in_Chinese/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Terms in Chinese
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Algorithm Analysis
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Algorithm Analysis
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Algorithm%20Analysis/1_Asymptotics/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Asymptotics
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Algorithm%20Analysis/2_Time-Complexity/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Time Complexity
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Algorithms Java
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Algorithms Java
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Algorithms_Java/Recursion_DequeGetIndex/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Recursion DequeGetIndex
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Algorithms_Java/Sequence_Hailstone/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sequence Hailstone
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Algorithms_Java/Sorting_1_SelectionSorting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sorting 1 SelectionSorting
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Math ComputerScience
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Math ComputerScience
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Math_ComputerScience/Remainder/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Remainder
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Programming Java
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Programming Java
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01_Basic_0_Introduction/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Basic - Introduction of Java
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01_Basic_1_print/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Basic - Print
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01_Basic_2_Comments/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Basic - Comments
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01_Basic_3_Iteration/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Basic - Iteration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01_Basic_4_Recursion/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    01 Basic 4 Recursion
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03_DataType_1_Variables/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    03 DataType 1 Variables
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03_DataType_2_Casting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    DataType - Casting
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03_DataType_3_Generics%3CT%3E/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Genercis
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05_Class_1_Intro/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    04_Class
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05_Class_2_Nested-Class/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Nested Class
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05_Class_3_Object/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    07_Object(Class)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05_Class_4_String/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    05_String(Class)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05_Class_5_Wrapper/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    05_Wrapper(Class)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05_Class_6_Math/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    05 Class 6 Math
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06_Interface_Iterators%26Iterables/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    06 Interface Iterators&Iterables
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06_Interface_compare_Comparable/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Comparable
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06_Interface_compare_Comparator/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    06 Interface compare Comparator
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07_Inheritance_1_Intro/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Inheritance
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07_Inheritance_2_Implementation-Inheritance/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Class - Implementation Inheritance
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07_Inheritance_3_Interface-Inheritance/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    07 Inheritance 3 Interface Inheritance
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07_Inheritance_4_Overriding/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Class - Overriding
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07_Inheritance_5_Dynamic-Method-Selection/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    07 Inheritance 5 Dynamic Method Selection
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07_Inheritance_6_Dynamic-Type%26Static-Type/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Class - Dynamic Type and Static Type
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07_Inheritance_7_Subtype-Polymorphism/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    07 Inheritance 7 Subtype Polymorphism
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07_Inheritance_8_Explicit-Higher-Order-Functions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Explicit Higher Order Functions
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09_Container/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    09 Container
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09_Exceptions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    09 Exceptions
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09_Farbage%20Collection/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    09 Farbage Collection
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09_Higher-Order-Function/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    09 Higher Order Function
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09_Test%26Assertions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    09 Test&Assertions
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09_ThrowExceptions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    09 ThrowExceptions
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../20---DataStructures---39/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    20   DataStructures   39
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../21__Array__1_Intro/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    02_Array
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../21__Array__2_Geometric-Resizing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    21  Array  2 Geometric Resizing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../21__Array__3_Usage-Ratio/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    21  Array  3 Usage Ratio
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../21__Array__4_GenericArray/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    21  Array  4 GenericArray
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../22__List__1__List_%28Interface%29/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    List
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../22__List__2__ArrayList/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    22  List  2  ArrayList
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../22__List__3__LinkedList/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    LinkedList
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    22  List  4  LinkedList (DIY)
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    22  List  4  LinkedList (DIY)
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#intlist" class="md-nav__link">
+    <span class="md-ellipsis">
+      自定义的IntList
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sllist" class="md-nav__link">
+    <span class="md-ellipsis">
+      自定义的SLList
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sllist_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      自定义的SLList（升级版）
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sllist_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      自定义的SLList（终极版）
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dllist" class="md-nav__link">
+    <span class="md-ellipsis">
+      自定义的DLList
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dllistsentinel-circular-doubly-linked-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      自定义的DLList（Sentinel循环版， 也叫做Circular Doubly Linked List）
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dllistgeneric" class="md-nav__link">
+    <span class="md-ellipsis">
+      DLList（Generic版）
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deque" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deque
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../23__Set__1_Set%28Interface%29/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    23  Set  1 Set(Interface)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../23__Set__2_HashSet/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    HashSet
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../23__Set__3_TreeSet/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    23  Set  3 TreeSet
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../23__Set__4_ArraySet_%28DIY%29/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    23  Set  4 ArraySet (DIY)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../24__Deque__1_LinkedListDeque_%28DIY%29/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    24  Deque  1 LinkedListDeque (DIY)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../24__Deque__2_ArrayDeque_%28DIY%29/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    24  Deque  2 ArrayDeque (DIY)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../25__Map__1_Map_%28interface%29/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Map/Dictionary
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../25__Map__2_HashMap/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    HashMap
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../25__Map__3_TreeMap/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    TreeMap
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../41_ProjectMngMaven_1_pom_xml/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    41 ProjectMngMaven 1 pom xml
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../41_ProjectMngMaven_2_CreateMavenProject/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    41 ProjectMngMaven 2 CreateMavenProject
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../41_ProjectMngMaven_3_Instructions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    41 ProjectMngMaven 3 Instructions
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../41_ProjectMngMaven_4_RefreshDependencies/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    41 ProjectMngMaven 4 RefreshDependencies
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../41_ProjectMng_Maven_0_Intro/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Maven
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../51_TestTool_JUnit_0_Intro/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    51 TestTool JUnit 0 Intro
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../51_TestTool_JUnit_1_Test%26Example/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Test
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../51_TestTool_JUnit_2_Dependency/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    引入依赖(dependency)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../52_TestTool_Truth_1_About/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    52 TestTool Truth 1 About
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../52_TestTool_Truth_2_Arrange-Act-Assert/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    52 TestTool Truth 2 Arrange Act Assert
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SDE_1_TDD%28Test-Driven-Development%29/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SDE 1 TDD(Test Driven Development)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SDE_IDE_IDEA_1_SetUp/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Set Up
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SDE_IDE_IDEA_2_LoadLibJars/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Load Library Jar Files for IDEA project
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SDE_IDE_IDEA_3_Build_JAR/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SDE IDE IDEA 3 Build JAR
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SDE_IDE_IDEA_4_SwitchToMaven/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SDE IDE IDEA 4 SwitchToMaven
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SDE_IDE_IDEA_5_Plugins/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SDE IDE IDEA 5 Plugins
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SDE_ImproveCoding_Enum/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SDE ImproveCoding Enum
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SDE_ImproveCoding_Helper-Method/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SDE ImproveCoding Helper Method
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Programming Python
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Programming Python
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Programming_Python/01_Introduction/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    01 Introduction
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Programming_Python/02_Installation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    02 Installation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    SDPAP
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            SDPAP
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../SDPAP/Automated%20Production%20Era/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Automated Production Era
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../SDPAP/SDPAP/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SDPAP
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Software Engineering
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            Software Engineering
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_9_1" id="__nav_9_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    2 VersionControl Git
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_9_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9_1">
+            <span class="md-nav__icon md-icon"></span>
+            2 VersionControl Git
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Software%20Engineering/2_VersionControl_Git/1_Introduction/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1 Introduction
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Software%20Engineering/2_VersionControl_Git/2_Installation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2 Installation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Software%20Engineering/2_VersionControl_Git/3_BasicCommand/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3 BasicCommand
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Software%20Engineering/2_VersionControl_Git/4_AdvancedCommand/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4 AdvancedCommand
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Software%20Engineering/2_VersionControl_Git/5_Workflows/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5 Workflows
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Software%20Engineering/2_VersionControl_Git/6_Troubleshooting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6 Troubleshooting
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_9_2" id="__nav_9_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    4 ProjectManagement
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_9_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9_2">
+            <span class="md-nav__icon md-icon"></span>
+            4 ProjectManagement
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Software%20Engineering/4_ProjectManagement/1-project%20lifecycle/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1 project lifecycle
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Software%20Engineering/4_ProjectManagement/2-agile%20development/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2 agile development
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Software%20Engineering/4_ProjectManagement/3-kanban%20and%20scrum/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3 kanban and scrum
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Software%20Engineering/4_ProjectManagement/4-task%20management%20tools/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4 task management tools
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_9_3" id="__nav_9_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    5 CollaborativeDevelopment
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_9_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9_3">
+            <span class="md-nav__icon md-icon"></span>
+            5 CollaborativeDevelopment
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Software%20Engineering/5_CollaborativeDevelopment/intro/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Intro
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_9_4" id="__nav_9_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    6 References
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_9_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9_4">
+            <span class="md-nav__icon md-icon"></span>
+            6 References
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Software%20Engineering/6_References/intro/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Intro
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Tutorial
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            Tutorial
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Tutorial/IDE_VSCode/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    IDE VSCode
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Tutorial/Markdown/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Markdown
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Tutorial/github/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Github
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Tutorial/mkdocs%20and%20github/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mkdocs and github
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11" >
+        
+          
+          <label class="md-nav__link" for="__nav_11" id="__nav_11_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Wetware
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_11">
+            <span class="md-nav__icon md-icon"></span>
+            Wetware
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Wetware/About/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    About
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Wetware/Computing_Neuroscience/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Computing Neuroscience
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Wetware/Neuromorphic_Computing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Neuromorphic Computing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#intlist" class="md-nav__link">
+    <span class="md-ellipsis">
+      自定义的IntList
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sllist" class="md-nav__link">
+    <span class="md-ellipsis">
+      自定义的SLList
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sllist_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      自定义的SLList（升级版）
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sllist_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      自定义的SLList（终极版）
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dllist" class="md-nav__link">
+    <span class="md-ellipsis">
+      自定义的DLList
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dllistsentinel-circular-doubly-linked-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      自定义的DLList（Sentinel循环版， 也叫做Circular Doubly Linked List）
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dllistgeneric" class="md-nav__link">
+    <span class="md-ellipsis">
+      DLList（Generic版）
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deque" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deque
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  <h1>22  List  4  LinkedList (DIY)</h1>
+
+<h2 id="intlist">自定义的IntList<a class="headerlink" href="#intlist" title="Permanent link">&para;</a></h2>
+<pre><code class="language-java">public class IntList {
+    public int value;
+    public IntList next;
+
+    public IntList(int value, IntList next) {
+        this.value = value;
+        this.next = next;
+    }
+
+    public int size(){
+        IntList x = this;
+        int i = 1; //or int i = 0, then use x != null as the while condition
+        while(x.next != null){
+            i++;
+            x = x.next;
+        }
+        return i;
+    }
+
+    public void printList(){
+        IntList x = this; //在 Java 中，this 不能被重新赋值，因此使用局部变量来遍历链表是必要的。
+        while(x != null){
+            System.out.print(x.value+&quot; &quot;);
+            x = x.next;
+        }
+        System.out.println();
+    }
+
+    public int sizeR(){
+        if(this.next == null){
+            return 1;
+        }
+        else{
+            return 1 + this.next.sizeR(); //这里的this.next实质上已经是一个instantiate了，也就是一个object，所以可以直接call .sizeR()
+        }
+    }
+
+    public int get(int i){
+        //Be sure the object you call is the first node，因为现在创建的方式比较原始
+        //index i starting from 0
+        IntList l = this;
+        for(int j = 0 ; j &lt; this.size() ; j++){
+            if(i == j){
+                return l.value;
+            }
+            l = l.next;
+        }
+        return l.value;
+    }
+}
+</code></pre>
+<pre><code class="language-java">public class Main {
+    public static void main(String[] args){
+        System.out.println(&quot;Linked List Practice and Exercise&quot;);
+
+        System.out.println(&quot;========IntList==========&quot;);
+
+        System.out.println(&quot;正顺序连接&quot;);
+        IntList num = new IntList(1,null);
+        num.next = new IntList(2, null);
+        num.next.next = new IntList(3,null);
+        num.next.next.next = new IntList(4, null);
+        //print
+        IntList pointer = num;
+        while(pointer!=null){    //这里着重注意！一开始写的pointer.next != null，这样最后一个node不会被access到
+            System.out.print(pointer.value + &quot; &quot;);
+            pointer = pointer.next;
+        } System.out.println();
+        System.out.println(&quot;size: &quot; + num.size());
+
+        System.out.println(&quot;逆序连接(Fool Example)&quot;);
+        IntList num_4 = new IntList(4, null);
+        IntList num_3 = new IntList(3, num_4);
+        IntList num_2 = new IntList(2, num_3);
+        IntList num_1 = new IntList(1, num_2);
+        //pring
+        pointer = num_1;
+        while(pointer != null){
+            System.out.print(pointer.value + &quot; &quot;);
+            pointer = pointer.next;
+        } System.out.println();
+        System.out.println(&quot;size: &quot; + num_1.size());  System.out.println();
+
+        System.out.println(&quot;逆序连接(Smart Example)&quot;);
+        IntList L = new IntList(4,null);
+        L = new IntList(3, L);
+        L = new IntList(2, L);
+        L = new IntList(1, L);
+        L.printList();
+        System.out.println(&quot;size: &quot; + L.size());
+        System.out.println(&quot;sizeR: &quot; + L.sizeR());
+
+        System.out.println(&quot;get second node value: &quot; + L.get(1));
+        System.out.println(&quot;get fourth node value: &quot; + L.get(3));
+
+        System.out.println();
+
+
+
+
+    }
+}
+</code></pre>
+<h2 id="sllist">自定义的SLList<a class="headerlink" href="#sllist" title="Permanent link">&para;</a></h2>
+<p>IntList的问题：在IntList的实现中，链表是一个裸露的递归数据结构（naked recursive data structure）。IntNode 类直接表示链表节点，并且 next 指向下一个节点。用户需要直接操作这些节点和递归结构。例如，要打印链表中的所有节点，需要编写递归或迭代代码：</p>
+<p>为了简化用户对递归数据结构的操作，我们通常会在这些数据结构的基础上提供更高级的封装和抽象。例如，使用一个封装类 SLList 来隐藏递归实现细节，并提供更易用的方法。</p>
+<p>Improvement1: Use more reliable name</p>
+<pre><code class="language-java">public class Node {
+    public int item;
+    public Node next;
+
+    public Node(int i, Node n){
+        item = i;
+        next = n;
+    }
+}
+</code></pre>
+<p>Improvement2: Avoid Bureaucracy and Use Private</p>
+<p>Knowing that IntNodes are hard to work with, we're going to create a separate class called SLList that the user will interact with. The basic class is simply:</p>
+<pre><code class="language-java">public class Node {
+    private int item;
+    private Node next;
+
+    public Node(int i, Node n){
+        item = i;
+        next = n;
+    }
+
+    public int getItem(){
+        return item;
+    }
+}
+</code></pre>
+<pre><code class="language-java">public class SLList {
+    public Node first_node;
+
+    public SLList(int a){
+        first_node = new Node(a, null);
+    }
+
+    public void addFirst(int a){
+        first_node = new Node(a, first_node); //这里想了一下，注意一下
+    }
+
+    public int getFirstItem(){
+        return first_node.getItem();
+    }
+
+}
+</code></pre>
+<p>When you create a public member (i.e. method or variable), be careful, because you're effectively committing to supporting that member's behavior exactly as it is now, forever.</p>
+<p>Improvement3: Nested Class</p>
+<p>At the moment, we have two .java files: IntNode and SLList. However, the IntNode is really just a supporting character in the story of SLList.</p>
+<p>Java provides us with the ability to embed a class declaration inside of another for just this situation. The syntax is straightforward and intuitive:</p>
+<pre><code class="language-java">public class SLList {
+       public class Node {
+            public int item;
+            public Node next;
+            public Node(int i, Node n) {
+                item = i;
+                next = n;
+            }
+       }
+
+       private Node first; 
+
+       public SLList(int x) {
+           first = new Node(x, null);
+       } 
+...
+}
+</code></pre>
+<h2 id="sllist_1">自定义的SLList（升级版）<a class="headerlink" href="#sllist_1" title="Permanent link">&para;</a></h2>
+<pre><code class="language-java">public class SLList {
+    private Node first_node;
+    public SLList(int i){
+        first_node = new Node(i, null);
+    }
+    public void add_first_node(int i){
+        first_node = new Node(i, first_node);
+    }
+    public Node get_first_node(){
+        return first_node;
+    }
+
+    public void add_last_node(int i){
+        //firstly find the last node now
+        Node x = this.get_first_node();
+        while(x.getNext()!=null){
+            x = x.next;
+        }
+        x.next = new Node(i, null);
+    }
+
+    public int size(){
+        Node x = this.get_first_node();
+        int count = 1;
+        while(x.getNext()!=null){
+            x = x.next;
+            count++;
+        }
+        return count;
+    }
+
+    public int sizeR(Node n){ //sizeR可以看做是sizeRR的helper method
+    //sizeR的作用是封装和简化递归计算逻辑，从而使sizeRR() 更加简洁易懂。
+        if(n.next==null){
+            return 1;
+        }
+        else{
+            return 1 + sizeR(n.next);
+        }
+    }
+
+    public int sizeRR(){ //Due to Overloaded, here sizeRR can name as sizeR.
+        return sizeR(first_node);
+    }
+
+    public static class Node{ //Node更像是一个helper class，因此用static嵌套在SLList内
+        private int item;
+        private Node next;
+        public Node(int i, Node n){
+            item = i;
+            next = n;
+        }
+        public int getItem(){
+            return item;
+        }
+        public Node getNext(){
+            return next;
+        }
+    }
+}
+</code></pre>
+<p>test:</p>
+<pre><code class="language-java">public class Main {
+    public static void main(String[] args){
+        SLList list = new SLList(4);
+        list.add_first_node(3);
+        list.add_first_node(2);
+        list.add_first_node(1);
+        list.add_last_node(5);
+        list.add_last_node(6);
+        System.out.println(list.size());
+        System.out.println(list.get_first_node().getItem());
+        System.out.println(list.sizeRR());
+
+    }
+}
+</code></pre>
+<h2 id="sllist_2">自定义的SLList（终极版）<a class="headerlink" href="#sllist_2" title="Permanent link">&para;</a></h2>
+<p>Improve4: Caching</p>
+<p>We can simply add a size variable to the SLList class that tracks the current size, yielding the code below. This practice of saving important data to speed up retrieval is sometimes known as caching. </p>
+<p>For example:</p>
+<pre><code class="language-java">public class SLList {
+    ... /* IntNode declaration omitted. */
+    private IntNode first;
+    private int size;
+
+    public SLList(int x) {
+        first = new IntNode(x, null);
+        size = 1;
+    }
+
+    public void addFirst(int x) {
+        first = new IntNode(x, first);
+        size += 1;
+    }
+
+    public int size() {
+        return size;
+    }
+    ...
+}
+</code></pre>
+<p>This modification makes our size method incredibly fast, no matter how large the list. Of course, it will also slow down our addFirst and addLast methods, and also increase the memory of usage of our class, but only by a trivial amount. In this case, the tradeoff is clearly in favor of creating a cache for size.</p>
+<p>Improve5: Add the empty list
+（添加一个空的linkedlist, but, this causes our addLast method to crash if we insert into an empty list. Since first is null, the attempt to access p.next in while (p.next != null) below causes a null pointer exception.）</p>
+<pre><code>...
+public SLList() {
+    first = null;
+    size = 0;
+}
+...
+...the addlast part...
+    if (first == null) {
+        first = new IntNode(x, null);
+        return;
+    }
+</code></pre>
+<p>Improve6: Sentinel Nodes</p>
+<p>This solution works, but special case code like that shown above should be avoided when necessary. Human beings only have so much working memory, and thus we want to keep complexity under control wherever possible. For a simple data structure like the SLList, the number of special cases is small. More complicated data structures like trees can get much, much uglier.</p>
+<p>A cleaner, though less obvious solution, is to make it so that all SLLists are the "same", even if they are empty. We can do this by creating a special node that is always there, which we will call a <code>sentinel node</code>. The sentinel node will hold a value, which we won't care about.</p>
+<p>Invariants
+An invariant is a fact about a data structure that is guaranteed to be true (assuming there are no bugs in your code).</p>
+<p>A SLList with a sentinel node has at least the following invariants:</p>
+<p>The sentinel reference always points to a sentinel node.</p>
+<p>The front item (if it exists), is always at sentinel.next.item.</p>
+<p>The size variable is always the total number of items that have been added.</p>
+<p>So after above updating, the final SLList would be like:</p>
+<pre><code class="language-java">public class SLList {
+    private Node sentinel;
+    private Node first_node;
+    private int size;
+
+    public SLList(){
+        sentinel = new Node(42, null);
+        first_node = null;
+        size = 0;
+    }
+
+    public SLList(int i){
+        first_node = new Node(i, null);
+        sentinel = new Node(42, first_node);
+        size = 1;
+    }
+
+    public Node getFirst_node(){
+        return first_node;
+    }
+
+    public int getNode(int index){
+
+        if(index+1&gt;size){
+            System.out.println(&quot;Error: out of bounds.&quot;);
+            return -1;
+        }
+        Node x = sentinel;
+        if(x.getNext()==null){
+            System.out.println(&quot;Error: no items in the linked list.&quot;);
+            return -1;
+        }
+
+        int now_index = -1;
+
+        while(x.getNext()!=null){
+            if(now_index==index){
+                return x.getItem();
+            }
+            x = x.getNext();
+            now_index++;
+        }
+        return now_index;
+    }
+
+    public void add_first_node(int i){
+        SLList x = this;
+        first_node = new Node(i, first_node);
+        sentinel = new Node(42, first_node);
+        size++;
+    }
+
+    public void add(int i){
+        Node x = sentinel;
+        if(sentinel.getNext()==null){
+            add_first_node(i);
+        }
+        else{
+            while(x.getNext()!=null){
+                x = x.getNext();
+            }
+            x.Special_Change_Next(i);
+            size++;
+        }
+    }
+
+    public int size(){
+        return size;
+    }
+
+    public static class Node{
+        private int item;
+        private Node next;
+        public Node(int i, Node n){
+            item = i;
+            next = n;
+        }
+        public int getItem(){
+            return item;
+        }
+        public Node getNext(){
+            return next;
+        }
+        public void Special_Change_Next(int i){
+            next = new Node(i, null);
+        }
+    }
+}
+</code></pre>
+<h2 id="dllist">自定义的DLList<a class="headerlink" href="#dllist" title="Permanent link">&para;</a></h2>
+<p>Improve7: Looking back: .last and .prev allow fast removeLast.</p>
+<pre><code class="language-java">public class DDList{
+    private Node t0;
+    private Node firstNode;
+    private Node lastNode;
+    private Node tN;
+    private int size;
+
+    //constructor, no arguments (create empty list)
+    public DDList(){
+        t0 = new Node(null,42,null);
+        tN = new Node(null, 98, null);
+        t0.next = tN;
+        tN.prev = t0;
+        firstNode = null;
+        lastNode = null;
+        size = 0;
+    }
+
+    //constructor, with arguments (create list with first node)
+    public DDList(int i){
+        t0 = new Node(null,42,null);
+        tN = new Node(null, 98, null);
+        Node x = new Node(t0, i, tN);
+        t0.next = x;
+        tN.prev = x;
+        firstNode = x;
+        lastNode = x;
+        size = 1;
+    }
+
+    //getFirst()
+    public Node getFirst(){
+        return firstNode;
+    }
+
+    //getLast()
+    public Node getLast(){
+        return lastNode;
+    }
+
+    //get(index)
+    public int get(int index){
+        if(size==0){
+            System.out.println(&quot;Exception: no item in the list.&quot;);
+            return -1;
+        }
+        else if(index &gt; size-1){
+            System.out.println(&quot;Exception: index out of range.&quot;);
+            return -1;
+        }
+        else {
+            Node x = this.getFirst(); //now x is index 0, if return x, get List(0)
+            int index_now = 0;
+            while(index_now &lt; index){
+                x = x.next;
+                index_now++;
+            }
+            return x.item;
+        }
+    }
+
+    //getSize
+    public int getSize(){
+        return size;
+    }
+
+    //addFirst
+    public void addFirst(int i){
+        if(size==0){
+            Node x = new Node(t0, i, tN);
+            t0.next = x;
+            tN.prev = x;
+            firstNode = x;
+            lastNode = x;
+            size++;
+        }
+        else{
+            Node x = new Node(null, i, null);
+            x.next = firstNode;
+            x.prev = t0;
+            t0.next = x;
+            firstNode.prev = x;
+            firstNode = x;
+            size++;
+        }
+
+    }
+
+    //addLast
+    public void addLast(int i){
+        if(size==0){
+            Node x = new Node(t0, i, tN);
+            t0.next = x;
+            tN.prev = x;
+            firstNode = x;
+            lastNode = x;
+            size++;
+        }
+        else{
+            Node y = new Node(null,i,null);
+            y.next = tN;
+            y.prev = lastNode;
+            lastNode.next = y;
+            tN.prev = y;
+            lastNode = y;
+            size++;
+        }
+    }
+
+    public static class Node{
+        public int item;
+        public Node next;
+        public Node prev;
+        public Node(Node p, int i, Node n){
+            item = i;
+            next = n;
+            prev = p;
+        }
+    }
+}
+</code></pre>
+<h2 id="dllistsentinel-circular-doubly-linked-list">自定义的DLList（Sentinel循环版， 也叫做Circular Doubly Linked List）<a class="headerlink" href="#dllistsentinel-circular-doubly-linked-list" title="Permanent link">&para;</a></h2>
+<p>Improve8: Sentinel upgrade: Avoiding special cases with sentBack or circular list.</p>
+<p>注意：循环版只是看起来简洁，在实现上不一定比非循环版更好！</p>
+<h2 id="dllistgeneric">DLList（Generic版）<a class="headerlink" href="#dllistgeneric" title="Permanent link">&para;</a></h2>
+<p>关于Generic，详见：[Generic]</p>
+<pre><code class="language-java">public class DDList&lt;T&gt;{
+    private Node&lt;T&gt; t0;
+    private Node&lt;T&gt; firstNode;
+    private Node&lt;T&gt; lastNode;
+    private Node&lt;T&gt; tN;
+    private int size;
+
+    //constructor, no arguments (create empty list)
+    public DDList(){
+        t0 = new Node&lt;T&gt;(null,null,null);
+        tN = new Node&lt;T&gt;(null, null, null);
+        t0.next = tN;
+        tN.prev = t0;
+        firstNode = null;
+        lastNode = null;
+        size = 0;
+    }
+
+    //constructor, with arguments (create list with first node)
+    public DDList(T i){
+        t0 = new Node&lt;T&gt;(null,null,null);
+        tN = new Node&lt;T&gt;(null, null, null);
+        Node&lt;T&gt; x = new Node&lt;T&gt;(t0, i, tN);
+        t0.next = x;
+        tN.prev = x;
+        firstNode = x;
+        lastNode = x;
+        size = 1;
+    }
+
+    //getFirst()
+    public Node&lt;T&gt; getFirst(){
+        return firstNode;
+    }
+
+    //getLast()
+    public Node&lt;T&gt; getLast(){
+        return lastNode;
+    }
+
+    //get(index)
+    public T get(int index){
+        if(size==0){
+            System.out.println(&quot;Exception: no item in the list.&quot;);
+            return null;
+        }
+        else if(index &gt; size-1){
+            System.out.println(&quot;Exception: index out of range.&quot;);
+            return null;
+        }
+        else {
+            Node&lt;T&gt; x = this.getFirst(); //now x is index 0, if return x, get List(0)
+            int index_now = 0;
+            while(index_now &lt; index){
+                x = x.next;
+                index_now++;
+            }
+            return x.item;
+        }
+    }
+
+    //getSize
+    public int getSize(){
+        return size;
+    }
+
+    //addFirst
+    public void addFirst(T i){
+        if(size==0){
+            Node&lt;T&gt; x = new Node&lt;T&gt;(t0, i, tN);
+            t0.next = x;
+            tN.prev = x;
+            firstNode = x;
+            lastNode = x;
+            size++;
+        }
+        else{
+            Node&lt;T&gt; x = new Node&lt;T&gt;(null, i, null);
+            x.next = firstNode;
+            x.prev = t0;
+            t0.next = x;
+            firstNode.prev = x;
+            firstNode = x;
+            size++;
+        }
+
+    }
+
+    //addLast
+    public void addLast(T i){
+        if(size==0){
+            Node&lt;T&gt; x = new Node&lt;T&gt;(t0, i, tN);
+            t0.next = x;
+            tN.prev = x;
+            firstNode = x;
+            lastNode = x;
+            size++;
+        }
+        else{
+            Node&lt;T&gt; y = new Node&lt;T&gt;(null,i,null);
+            y.next = tN;
+            y.prev = lastNode;
+            lastNode.next = y;
+            tN.prev = y;
+            lastNode = y;
+            size++;
+        }
+    }
+
+    public static class Node&lt;T&gt;{
+        public T item;
+        public Node&lt;T&gt; next;
+        public Node&lt;T&gt; prev;
+        public Node(Node&lt;T&gt; p, T i, Node&lt;T&gt; n){
+            item = i;
+            next = n;
+            prev = p;
+        }
+    }
+}
+</code></pre>
+<p>test:</p>
+<pre><code class="language-java">/*****Contains methods below:
+void addFirstNode(int i)
+void add(int i)
+Node getFirstNode()
+Node getNode(index)
+Node getLastNode()
+int getSize()
+void printList()
+*/
+public class Main {
+    public static &lt;Node&gt; void main(String[] args) {
+
+        //constructor, no arguments (create empty list)
+        //constructor, with arguments (create list with first node)
+        //getFirst()
+        //get(index)
+        //getSize
+        //addFirst
+        //add(item)
+
+        DDList&lt;Integer&gt; list = new DDList&lt;Integer&gt;();
+        list.addLast(5);
+        System.out.println(list.getSize());
+
+        list.addLast(6);
+        list.addFirst(4);
+        System.out.println(list.getSize());
+        System.out.println(list.get(0));
+        System.out.println(list.get(1));
+        System.out.println(list.get(2));
+
+
+
+        list.addFirst(3);
+        System.out.println(list.getSize());
+
+        list.addFirst(2);
+        list.addFirst(1);
+        list.addFirst(0);
+        System.out.println(list.get(4));
+        System.out.println(list.getSize());
+        System.out.println(list.getFirst().item);
+
+        DDList&lt;String&gt; s = new DDList&lt;String&gt;();
+        s.addFirst(&quot;hello&quot;);
+        s.addLast(&quot;world&quot;);
+        System.out.println(s.get(0));
+        System.out.println(s.get(1));
+    }
+}
+</code></pre>
+<h2 id="deque">Deque<a class="headerlink" href="#deque" title="Permanent link">&para;</a></h2>
+<p>see UCB-CS61B-project1A</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.c8d2eff1.min.js"></script>
+      
+    
+  </body>
+</html>
